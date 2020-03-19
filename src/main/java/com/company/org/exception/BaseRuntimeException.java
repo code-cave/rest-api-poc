@@ -15,4 +15,16 @@ public class BaseRuntimeException extends RuntimeException {
         super(errorVO.buildErrorMessage(), cause);
         this.errorVO = errorVO;
     }
+
+    public ErrorVO getErrorVO() {
+        return errorVO;
+    }
+
+    public int getStatusCode() {
+        return errorVO.getHttpStatus().value();
+    }
+
+    public String getErrorMessage() {
+        return  errorVO.buildErrorMessage();
+    }
 }

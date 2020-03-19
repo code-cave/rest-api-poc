@@ -1,11 +1,8 @@
 package com.company.org.config.interceptors;
 
-import com.company.org.exception.AuthException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,16 +16,14 @@ public class RequestInterceptor implements HandlerInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object o) {
         // Adding in super simple auth
         // Can always be replaced with something legit
-        String token = req.getHeader("token");
-        if (StringUtils.isEmpty(token)) {
-            throwAuthError("required token header missing");
+        if (req.getAttribute("start_time") == null) {
+            Long startTime = new Timestamp(System.currentTimeMillis()).getTime();
+            req.setAttribute("start_time", startTime);
         }
-        if (!"112233".equals(token)) {
-            throwAuthError("access is not authorized for token: " + token);
-        }
+
         return true;
     }
 
@@ -50,10 +45,5 @@ public class RequestInterceptor implements HandlerInterceptor {
             .append(", CODE=").append(res.getStatus()).toString();
 
         LOGGER.info(logMessage);
-    }
-
-    private void throwAuthError(String message) {
-
-        throw new AuthException(HttpStatus.UNAUTHORIZED, message);
     }
 }
