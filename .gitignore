@@ -1,0 +1,22 @@
+/build/
+
+# intellij
+.idea
+*.iml
+
+# cassandra-unit
+target
+
+# spring boot 
+out
+
+# sonarqube
+.scannerwork
+
+#maven
+.settings
+
+#log
+*.log
+*.gz
+**/.DS_Store
