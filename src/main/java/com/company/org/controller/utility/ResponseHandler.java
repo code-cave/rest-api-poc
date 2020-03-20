@@ -2,6 +2,7 @@ package com.company.org.controller.utility;
 
 import com.company.org.error.ErrorVO;
 import com.company.org.model.ResponseVO;
+import com.company.org.model.avro.error.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -37,13 +38,12 @@ public class ResponseHandler {
     }
 
     private String buildErrorResponse(ErrorVO errorVO) {
-        return new StringBuilder()
-            .append('{')
-            .append("\"timestamp\":\"").append(new Date().toString()).append("\",")
-            .append("\"status\":").append(errorVO.getHttpStatus().value()).append(",")
-            .append("\"error\":\"").append(errorVO.getHttpStatus().getReasonPhrase()).append("\",")
-            .append("\"message\":\"").append(errorVO.getErrorMessage()).append('"')
-            .append('}')
-            .toString();
+
+        return new ErrorResponse(
+            new Date().toString(),
+            errorVO.getHttpStatus().value(),
+            errorVO.getHttpStatus().getReasonPhrase(),
+            errorVO.getErrorMessage()
+        ).toString();
     }
 }
