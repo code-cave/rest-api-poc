@@ -1,10 +1,10 @@
 package com.company.org.controller;
 
 import com.company.org.controller.handler.ResponseHandler;
-import com.company.org.model.RequestVO;
-import com.company.org.model.ResponseVO;
 import com.company.org.model.ErrorResponse;
 import com.company.org.model.ProductDataModel;
+import com.company.org.model.RequestVO;
+import com.company.org.model.ResponseVO;
 import com.company.org.security.Authentication;
 import com.company.org.validation.GetProductValidatorV1;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +27,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
-public class GetProductControllerV1 {
+public class PutProductControllerV1 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GetProductControllerV1.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PutProductControllerV1.class);
 
     @Autowired
     Authentication authentication;
@@ -38,19 +38,20 @@ public class GetProductControllerV1 {
     GetProductValidatorV1 getProductValidatorV1;
 
     //@Autowired
-    //GetProductServiceV1 getProductServiceV1;
+    //PutProductServiceV1 putProductServiceV1;
 
     @Autowired
     ResponseHandler responseHandler;
 
     @ResponseBody
-    @GetMapping(
+    @PutMapping(
         path = "/retail/product/{id}",
+        consumes = { MediaType.APPLICATION_JSON_VALUE },
         produces = { MediaType.APPLICATION_JSON_VALUE }
     )
     @Operation(
-        summary = "Get Product Record",
-        description = "Performs a GET operation to retrieve a product based on id",
+        summary = "Put Product Record",
+        description = "Performs a Put operation to update product price based on id and request body",
         tags = "MyRetailAPI",
         parameters = {
             @Parameter(
@@ -71,6 +72,13 @@ public class GetProductControllerV1 {
                 name = "Accept",
                 in = ParameterIn.HEADER,
                 description = "The Accept MIME type",
+                example = "application/json",
+                required = true
+            ),
+            @Parameter(
+                name = "Content-Type",
+                in = ParameterIn.HEADER,
+                description = "The Content-Type MIME type",
                 example = "application/json",
                 required = true
             )
@@ -103,9 +111,11 @@ public class GetProductControllerV1 {
             schema = @Schema(implementation = ErrorResponse.class))
         )
     })
-    public ResponseEntity<String> getProductById(@PathVariable(name = "id") String id,
+    public ResponseEntity<String> putProductById(@PathVariable(name = "id") String id,
                                                  @RequestHeader(name = "token") String token,
-                                                 @RequestHeader(name = "Accept") String accept) {
+                                                 @RequestHeader(name = "Accept") String accept,
+                                                 @RequestHeader(name = "Content-Type") String contentType,
+                                                 @RequestBody String requestBody) {
         /*
          * The id is of type String so that validation can handle in the validator class
          * and throw the specific bad request error with the error message as opposed to
@@ -118,6 +128,7 @@ public class GetProductControllerV1 {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("token", token);
         httpHeaders.add(HttpHeaders.ACCEPT, accept);
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, contentType);
 
         authentication.authenticate(token);
 
