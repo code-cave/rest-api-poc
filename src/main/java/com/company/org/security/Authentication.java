@@ -14,7 +14,7 @@ public class Authentication {
         if (StringUtils.isEmpty(token)) {
             throw new AuthException(HttpStatus.UNAUTHORIZED, "required token header missing");
         }
-        if (!"112233".equals(token)) {
+        else if (!"112233".equals(token)) {
             throw new AuthException(HttpStatus.UNAUTHORIZED, "access is not authorized for token: " + token);
         }
     }

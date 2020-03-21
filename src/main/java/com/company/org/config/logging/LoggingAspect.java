@@ -47,6 +47,7 @@ public class LoggingAspect {
     }
 
     protected String getParamString(Map<String, String[]> parameterMap) {
+
         List<String> paramList = new ArrayList<>();
         if (!parameterMap.isEmpty()) {
             Set<String> keySet = parameterMap.keySet();

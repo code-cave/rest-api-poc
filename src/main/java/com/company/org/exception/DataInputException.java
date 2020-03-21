@@ -25,8 +25,4 @@ public class DataInputException extends BaseRuntimeException {
         super(errorVO, cause);
         this.responseContentType = responseContentType;
     }
-
-    public MediaType getResponseContentType() {
-        return this.responseContentType;
-    }
 }

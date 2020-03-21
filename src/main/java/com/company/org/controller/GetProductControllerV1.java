@@ -1,12 +1,15 @@
 package com.company.org.controller;
 
-import com.company.org.controller.utility.ResponseHandler;
+import com.company.org.controller.handler.ResponseHandler;
+import com.company.org.model.RequestVO;
 import com.company.org.model.ResponseVO;
 import com.company.org.model.ErrorResponse;
 import com.company.org.model.ProductDataModel;
 import com.company.org.security.Authentication;
+import com.company.org.validation.GetProductValidatorV1;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,31 +17,35 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1")
-public class MyRetailControllerV1 {
+public class GetProductControllerV1 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyRetailControllerV1.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetProductControllerV1.class);
 
     @Autowired
     Authentication authentication;
 
-    //@Autowired
-    //FindMasterIdentifiersValidatorV1 findMasterIdentifiersValidatorV1;
+    @Autowired
+    GetProductValidatorV1 getProductValidatorV1;
 
     //@Autowired
-    //FindMasterIdentifiersServiceV1 findMasterIdentifiersServiceV1;
+    //GetProductServiceV1 getProductServiceV1;
 
     @Autowired
     ResponseHandler responseHandler;
 
     @ResponseBody
     @GetMapping(
-        path = "/retail/products/{id}",
+        path = "/retail/product/{id}",
         produces = { MediaType.APPLICATION_JSON_VALUE }
     )
     @Operation(
@@ -46,8 +53,27 @@ public class MyRetailControllerV1 {
         description = "Performs a GET operation to retrieve products based on id",
         tags = "MyRetailAPI",
         parameters = {
-            @Parameter(name = "id", required = true),
-            @Parameter(name = "token", required = true, example = "112233")
+            @Parameter(
+                name = "id",
+                in = ParameterIn.PATH,
+                description = "Must be of type long",
+                example = "13860428",
+                required = true
+            ),
+            @Parameter(
+                name = "token",
+                in = ParameterIn.HEADER,
+                description = "The authentication token",
+                example = "112233",
+                required = true
+            ),
+            @Parameter(
+                name = "Accept",
+                in = ParameterIn.HEADER,
+                description = "The Accept MIME type",
+                example = "application/json",
+                required = true
+            )
         }
     )
     @ApiResponses(value = {
@@ -77,9 +103,25 @@ public class MyRetailControllerV1 {
             schema = @Schema(implementation = ErrorResponse.class))
         )
     })
-    public ResponseEntity<String> getProductById(@PathVariable(value = "id") String id, @RequestHeader String token) {
+    public ResponseEntity<String> getProductById(@PathVariable(name = "id") String id,
+                                                 @RequestHeader(name = "token") String token,
+                                                 @RequestHeader(name = "Accept") String accept) {
+        /*
+         * The id is of type String so that validation can handle in the validator class
+         * and throw the specific bad request error with the error message as opposed to
+         * having the Spring frontend throw the error with its own message
+         */
+        // Deal with path variables
+        Map<String, String> pathVars = new HashMap<>();
+        pathVars.put("id", id);
+        // Deal with headers
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("token", token);
+        httpHeaders.add(HttpHeaders.ACCEPT, accept);
 
         authentication.authenticate(token);
+
+        RequestVO requestVO = getProductValidatorV1.validateGetRequest(pathVars, httpHeaders.toSingleValueMap());
 
         ResponseVO response = new ResponseVO("{ \"cool\": \"json\" }");
 

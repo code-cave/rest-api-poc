@@ -1,4 +1,4 @@
-package com.company.org.config.interceptors;
+package com.company.org.config.interceptor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,7 +8,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 public class RequestVO implements Serializable {
@@ -16,40 +15,32 @@ public class RequestVO implements Serializable {
     private static final long serialVersionUID = 1;
     public static final String REQUEST_BODY_ATTRIBUTE = "reqBodyAttrib";
 
-    String inputReqBodyString;
+    String inputReqBodyString = "";
     Map<String,String> inputHeaders;
     Map<String,String> inputPathVars;
-    Map<String,String> requestBodyMap = new HashMap<>();
     String inputAcceptType;
     MediaType responseContentType = MediaType.APPLICATION_JSON;
 
-    public RequestVO(String requestBody, Map<String,String> inputHeaders, Map<String,String> pathVars) {
+    public RequestVO(Map<String,String> pathVars, Map<String,String> inputHeaders) {
+
+        setLoggingAttribute(inputReqBodyString);
+        cleanHeaders(inputHeaders);
+        this.inputHeaders = inputHeaders;
+        this.inputAcceptType = inputHeaders.get(HttpHeaders.ACCEPT);
+        this.inputPathVars = pathVars;
+    }
+
+    public RequestVO(String requestBody, Map<String,String> pathVars, Map<String,String> inputHeaders) {
 
         setLoggingAttribute(requestBody);
-        this.inputReqBodyString =requestBody;
+        this.inputReqBodyString = requestBody;
         cleanHeaders(inputHeaders);
         this.inputHeaders = inputHeaders;
         this.inputAcceptType = inputHeaders.get(HttpHeaders.ACCEPT);
         this.inputPathVars = pathVars;
     }
 
-    public RequestVO(Map<String,String> requestBodyMap, Map<String,String> inputHeaders, Map<String,String> pathVars) {
-
-        setLoggingAttribute(requestBodyMap);
-        this.inputReqBodyString = "";
-        this.requestBodyMap = requestBodyMap;
-        cleanHeaders(inputHeaders);
-        this.inputHeaders = inputHeaders;
-        this.inputAcceptType = inputHeaders.get(HttpHeaders.ACCEPT);
-        this.inputPathVars = pathVars;
-    }
-
-    static void setLoggingAttribute(Map<String,String> requestBody) {
-
-        setLoggingAttribute(requestBody.toString());
-    }
-
-    static void setLoggingAttribute(String requestBody) {
+    private static void setLoggingAttribute(String requestBody) {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
@@ -58,21 +49,44 @@ public class RequestVO implements Serializable {
         }
     }
 
-    void cleanHeaders(Map<String, String> inputHeaders) {
+    private void cleanHeaders(Map<String, String> inputHeaders) {
+
         inputHeaders.put(HttpHeaders.CONTENT_TYPE, parseHeader(inputHeaders.get(HttpHeaders.CONTENT_TYPE)));
         inputHeaders.put(HttpHeaders.ACCEPT, parseHeader(inputHeaders.get(HttpHeaders.ACCEPT)));
     }
 
-    boolean isJSONBased() {
+    public boolean hasJsonContentType() {
+
         return MediaType.APPLICATION_JSON_VALUE.equals(parseHeader(inputHeaders.get(HttpHeaders.CONTENT_TYPE)));
     }
 
+    public boolean hasValidAcceptType() {
+
+        String acceptType = parseHeader(inputHeaders.get(HttpHeaders.ACCEPT));
+        return StringUtils.isEmpty(acceptType) ||
+            MediaType.APPLICATION_JSON_VALUE.equals(acceptType) ||
+            MediaType.ALL_VALUE.equals(acceptType);
+    }
+
     private String parseHeader(String headerValue) {
+
         String[] values = StringUtils.split(headerValue, ";");
         return (values != null) ? values[0] : headerValue;
     }
 
     public MediaType getResponseContentType() {
         return responseContentType;
+    }
+
+    public Map<String, String> getInputHeaders() {
+        return inputHeaders;
+    }
+
+    public Map<String, String> getPathVars() {
+        return inputPathVars;
+    }
+
+    public String getAcceptType() {
+        return inputAcceptType;
     }
 }

@@ -1,6 +1,6 @@
 package com.company.org.config;
 
-import com.company.org.config.interceptors.RequestInterceptor;
+import com.company.org.config.interceptor.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

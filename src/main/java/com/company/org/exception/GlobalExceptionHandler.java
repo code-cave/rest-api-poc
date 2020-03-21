@@ -1,6 +1,6 @@
 package com.company.org.exception;
 
-import com.company.org.controller.utility.ResponseHandler;
+import com.company.org.controller.handler.ResponseHandler;
 import com.company.org.error.ErrorVO;
 import com.company.org.model.RequestVO;
 import org.slf4j.Logger;

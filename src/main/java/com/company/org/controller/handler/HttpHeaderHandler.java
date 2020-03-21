@@ -1,4 +1,4 @@
-package com.company.org.controller.utility;
+package com.company.org.controller.handler;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -10,9 +10,8 @@ public final class HttpHeaderHandler {
     public static final HttpHeaders DEFAULT_RESPONSE_HEADERS = defaultResponseHeaders();
 
     public static HttpHeaders buildHeaders(MediaType responseContentType) {
-
+        // Could change at some point
         HttpHeaders responseHeaders = new HttpHeaders();
-        //must be xml or json -  previously validated to one of those 2 types
         responseHeaders.add(HttpHeaders.CONTENT_TYPE, responseContentType.toString());
         responseHeaders.add(KEEP_ALIVE, TIMEOUT_5);
         return responseHeaders;
