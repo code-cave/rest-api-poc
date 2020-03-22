@@ -43,6 +43,16 @@ public interface RequestValidatorBase {
         return requestVO;
     }
 
+    default RequestVO validateDeleteRequest(Map<String, String> pathVars, Map<String,String> inputHeaders) {
+
+        RequestVO requestVO = new RequestVO(pathVars, inputHeaders);
+        validateHeaders(requestVO);
+        validateAccept(requestVO);
+        validateRequest(requestVO);
+
+        return requestVO;
+    }
+
     default HttpStatus getDefaultErrorStatusCode() {
 
         return HttpStatus.BAD_REQUEST;
