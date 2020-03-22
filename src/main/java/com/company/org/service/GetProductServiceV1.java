@@ -39,7 +39,7 @@ public class GetProductServiceV1 {
     private void checkResult(Product product, RequestVO requestVO) {
         // If not found, product will be null
         if (product == null) {
-            String message = "Product with id " + requestVO.getPathVars().get("id") + " not found";
+            String message = "Product record with id " + requestVO.getPathVars().get("id") + " not found";
             throw new ServiceLayerException(HttpStatus.NOT_FOUND, message, requestVO);
         }
     }
