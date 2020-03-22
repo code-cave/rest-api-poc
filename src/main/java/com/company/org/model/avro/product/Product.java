@@ -12,23 +12,23 @@ import org.apache.avro.specific.SpecificData;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 905103897512986946L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ProductDataModel\",\"namespace\":\"com.company.org.model.avro.product\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"current_price\",\"type\":{\"type\":\"record\",\"name\":\"CurrentPrice\",\"fields\":[{\"name\":\"value\",\"type\":\"double\"},{\"name\":\"currency_code\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"default\":\"USD\"}]}}]}");
+public class Product extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -2155563431967013368L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Product\",\"namespace\":\"com.company.org.model.avro.product\",\"fields\":[{\"name\":\"_id\",\"type\":\"long\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"current_price\",\"type\":{\"type\":\"record\",\"name\":\"CurrentPrice\",\"fields\":[{\"name\":\"value\",\"type\":\"double\"},{\"name\":\"currency_code\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"default\":\"USD\"}]}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
 
-  private static final BinaryMessageEncoder<ProductDataModel> ENCODER =
-      new BinaryMessageEncoder<ProductDataModel>(MODEL$, SCHEMA$);
+  private static final BinaryMessageEncoder<Product> ENCODER =
+      new BinaryMessageEncoder<Product>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<ProductDataModel> DECODER =
-      new BinaryMessageDecoder<ProductDataModel>(MODEL$, SCHEMA$);
+  private static final BinaryMessageDecoder<Product> DECODER =
+      new BinaryMessageDecoder<Product>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageDecoder instance used by this class.
    */
-  public static BinaryMessageDecoder<ProductDataModel> getDecoder() {
+  public static BinaryMessageDecoder<Product> getDecoder() {
     return DECODER;
   }
 
@@ -36,22 +36,22 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    */
-  public static BinaryMessageDecoder<ProductDataModel> createDecoder(SchemaStore resolver) {
-    return new BinaryMessageDecoder<ProductDataModel>(MODEL$, SCHEMA$, resolver);
+  public static BinaryMessageDecoder<Product> createDecoder(SchemaStore resolver) {
+    return new BinaryMessageDecoder<Product>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this ProductDataModel to a ByteBuffer. */
+  /** Serializes this Product to a ByteBuffer. */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a ProductDataModel from a ByteBuffer. */
-  public static ProductDataModel fromByteBuffer(
+  /** Deserializes a Product from a ByteBuffer. */
+  public static Product fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-   private long id;
+   private long _id;
    private String name;
    private com.company.org.model.avro.product.CurrentPrice current_price;
 
@@ -60,16 +60,16 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public ProductDataModel() {}
+  public Product() {}
 
   /**
    * All-args constructor.
-   * @param id The new value for id
+   * @param _id The new value for _id
    * @param name The new value for name
    * @param current_price The new value for current_price
    */
-  public ProductDataModel(Long id, String name, com.company.org.model.avro.product.CurrentPrice current_price) {
-    this.id = id;
+  public Product(Long _id, String name, com.company.org.model.avro.product.CurrentPrice current_price) {
+    this._id = _id;
     this.name = name;
     this.current_price = current_price;
   }
@@ -78,7 +78,7 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
   // Used by DatumWriter.  Applications should not call.
   public Object get(int field$) {
     switch (field$) {
-    case 0: return id;
+    case 0: return _id;
     case 1: return name;
     case 2: return current_price;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
@@ -89,7 +89,7 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
   @SuppressWarnings(value="unchecked")
   public void put(int field$, Object value$) {
     switch (field$) {
-    case 0: id = (Long)value$; break;
+    case 0: _id = (Long)value$; break;
     case 1: name = (String)value$; break;
     case 2: current_price = (com.company.org.model.avro.product.CurrentPrice)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
@@ -97,19 +97,19 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
   }
 
   /**
-   * Gets the value of the 'id' field.
-   * @return The value of the 'id' field.
+   * Gets the value of the '_id' field.
+   * @return The value of the '_id' field.
    */
-  public Long getId() {
-    return id;
+  public Long getId$1() {
+    return _id;
   }
 
   /**
-   * Sets the value of the 'id' field.
+   * Sets the value of the '_id' field.
    * @param value the value to set.
    */
-  public void setId(Long value) {
-    this.id = value;
+  public void setId$1(Long value) {
+    this._id = value;
   }
 
   /**
@@ -145,38 +145,38 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
   }
 
   /**
-   * Creates a new ProductDataModel RecordBuilder.
-   * @return A new ProductDataModel RecordBuilder
+   * Creates a new Product RecordBuilder.
+   * @return A new Product RecordBuilder
    */
-  public static com.company.org.model.avro.product.ProductDataModel.Builder newBuilder() {
-    return new com.company.org.model.avro.product.ProductDataModel.Builder();
+  public static com.company.org.model.avro.product.Product.Builder newBuilder() {
+    return new com.company.org.model.avro.product.Product.Builder();
   }
 
   /**
-   * Creates a new ProductDataModel RecordBuilder by copying an existing Builder.
+   * Creates a new Product RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new ProductDataModel RecordBuilder
+   * @return A new Product RecordBuilder
    */
-  public static com.company.org.model.avro.product.ProductDataModel.Builder newBuilder(com.company.org.model.avro.product.ProductDataModel.Builder other) {
-    return new com.company.org.model.avro.product.ProductDataModel.Builder(other);
+  public static com.company.org.model.avro.product.Product.Builder newBuilder(com.company.org.model.avro.product.Product.Builder other) {
+    return new com.company.org.model.avro.product.Product.Builder(other);
   }
 
   /**
-   * Creates a new ProductDataModel RecordBuilder by copying an existing ProductDataModel instance.
+   * Creates a new Product RecordBuilder by copying an existing Product instance.
    * @param other The existing instance to copy.
-   * @return A new ProductDataModel RecordBuilder
+   * @return A new Product RecordBuilder
    */
-  public static com.company.org.model.avro.product.ProductDataModel.Builder newBuilder(com.company.org.model.avro.product.ProductDataModel other) {
-    return new com.company.org.model.avro.product.ProductDataModel.Builder(other);
+  public static com.company.org.model.avro.product.Product.Builder newBuilder(com.company.org.model.avro.product.Product other) {
+    return new com.company.org.model.avro.product.Product.Builder(other);
   }
 
   /**
-   * RecordBuilder for ProductDataModel instances.
+   * RecordBuilder for Product instances.
    */
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ProductDataModel>
-    implements org.apache.avro.data.RecordBuilder<ProductDataModel> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Product>
+    implements org.apache.avro.data.RecordBuilder<Product> {
 
-    private long id;
+    private long _id;
     private String name;
     private com.company.org.model.avro.product.CurrentPrice current_price;
     private com.company.org.model.avro.product.CurrentPrice.Builder current_priceBuilder;
@@ -190,10 +190,10 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.company.org.model.avro.product.ProductDataModel.Builder other) {
+    private Builder(com.company.org.model.avro.product.Product.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other._id)) {
+        this._id = data().deepCopy(fields()[0].schema(), other._id);
         fieldSetFlags()[0] = true;
       }
       if (isValidValue(fields()[1], other.name)) {
@@ -210,13 +210,13 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
     }
 
     /**
-     * Creates a Builder by copying an existing ProductDataModel instance
+     * Creates a Builder by copying an existing Product instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.company.org.model.avro.product.ProductDataModel other) {
+    private Builder(com.company.org.model.avro.product.Product other) {
             super(SCHEMA$);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other._id)) {
+        this._id = data().deepCopy(fields()[0].schema(), other._id);
         fieldSetFlags()[0] = true;
       }
       if (isValidValue(fields()[1], other.name)) {
@@ -231,39 +231,39 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
     }
 
     /**
-      * Gets the value of the 'id' field.
+      * Gets the value of the '_id' field.
       * @return The value.
       */
-    public Long getId() {
-      return id;
+    public Long getId$1() {
+      return _id;
     }
 
     /**
-      * Sets the value of the 'id' field.
-      * @param value The value of 'id'.
+      * Sets the value of the '_id' field.
+      * @param value The value of '_id'.
       * @return This builder.
       */
-    public com.company.org.model.avro.product.ProductDataModel.Builder setId(long value) {
+    public com.company.org.model.avro.product.Product.Builder setId$1(long value) {
       validate(fields()[0], value);
-      this.id = value;
+      this._id = value;
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'id' field has been set.
-      * @return True if the 'id' field has been set, false otherwise.
+      * Checks whether the '_id' field has been set.
+      * @return True if the '_id' field has been set, false otherwise.
       */
-    public boolean hasId() {
+    public boolean hasId$1() {
       return fieldSetFlags()[0];
     }
 
 
     /**
-      * Clears the value of the 'id' field.
+      * Clears the value of the '_id' field.
       * @return This builder.
       */
-    public com.company.org.model.avro.product.ProductDataModel.Builder clearId() {
+    public com.company.org.model.avro.product.Product.Builder clearId$1() {
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -281,7 +281,7 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'name'.
       * @return This builder.
       */
-    public com.company.org.model.avro.product.ProductDataModel.Builder setName(String value) {
+    public com.company.org.model.avro.product.Product.Builder setName(String value) {
       validate(fields()[1], value);
       this.name = value;
       fieldSetFlags()[1] = true;
@@ -301,7 +301,7 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
       * Clears the value of the 'name' field.
       * @return This builder.
       */
-    public com.company.org.model.avro.product.ProductDataModel.Builder clearName() {
+    public com.company.org.model.avro.product.Product.Builder clearName() {
       name = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -320,7 +320,7 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'current_price'.
       * @return This builder.
       */
-    public com.company.org.model.avro.product.ProductDataModel.Builder setCurrentPrice(com.company.org.model.avro.product.CurrentPrice value) {
+    public com.company.org.model.avro.product.Product.Builder setCurrentPrice(com.company.org.model.avro.product.CurrentPrice value) {
       validate(fields()[2], value);
       this.current_priceBuilder = null;
       this.current_price = value;
@@ -356,7 +356,7 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
      * @param value The builder instance that must be set.
      * @return This builder.
      */
-    public com.company.org.model.avro.product.ProductDataModel.Builder setCurrentPriceBuilder(com.company.org.model.avro.product.CurrentPrice.Builder value) {
+    public com.company.org.model.avro.product.Product.Builder setCurrentPriceBuilder(com.company.org.model.avro.product.CurrentPrice.Builder value) {
       clearCurrentPrice();
       current_priceBuilder = value;
       return this;
@@ -374,7 +374,7 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
       * Clears the value of the 'current_price' field.
       * @return This builder.
       */
-    public com.company.org.model.avro.product.ProductDataModel.Builder clearCurrentPrice() {
+    public com.company.org.model.avro.product.Product.Builder clearCurrentPrice() {
       current_price = null;
       current_priceBuilder = null;
       fieldSetFlags()[2] = false;
@@ -383,10 +383,10 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
 
     @Override
     @SuppressWarnings("unchecked")
-    public ProductDataModel build() {
+    public Product build() {
       try {
-        ProductDataModel record = new ProductDataModel();
-        record.id = fieldSetFlags()[0] ? this.id : (Long) defaultValue(fields()[0]);
+        Product record = new Product();
+        record._id = fieldSetFlags()[0] ? this._id : (Long) defaultValue(fields()[0]);
         record.name = fieldSetFlags()[1] ? this.name : (String) defaultValue(fields()[1]);
         if (current_priceBuilder != null) {
           record.current_price = this.current_priceBuilder.build();
@@ -401,8 +401,8 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<ProductDataModel>
-    WRITER$ = (org.apache.avro.io.DatumWriter<ProductDataModel>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<Product>
+    WRITER$ = (org.apache.avro.io.DatumWriter<Product>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -410,8 +410,8 @@ public class ProductDataModel extends org.apache.avro.specific.SpecificRecordBas
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<ProductDataModel>
-    READER$ = (org.apache.avro.io.DatumReader<ProductDataModel>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<Product>
+    READER$ = (org.apache.avro.io.DatumReader<Product>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {

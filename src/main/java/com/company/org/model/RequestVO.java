@@ -1,5 +1,6 @@
 package com.company.org.model;
 
+import org.apache.avro.specific.SpecificRecord;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
@@ -19,11 +20,12 @@ public class RequestVO implements Serializable {
     Map<String,String> inputHeaders;
     Map<String,String> inputPathVars;
     String inputAcceptType;
+    SpecificRecord avroObject;
     MediaType responseContentType = MediaType.APPLICATION_JSON;
 
     public RequestVO(Map<String,String> pathVars, Map<String,String> inputHeaders) {
 
-        setLoggingAttribute(inputReqBodyString);
+        setLoggingAttribute(pathVars.toString());
         cleanHeaders(inputHeaders);
         this.inputHeaders = inputHeaders;
         this.inputAcceptType = inputHeaders.get(HttpHeaders.ACCEPT);
@@ -72,6 +74,18 @@ public class RequestVO implements Serializable {
 
         String[] values = StringUtils.split(headerValue, ";");
         return (values != null) ? values[0] : headerValue;
+    }
+
+    public void setAvroObject(SpecificRecord avroObject) {
+        this.avroObject = avroObject;
+    }
+
+    public SpecificRecord getAvroObject() {
+        return avroObject;
+    }
+
+    public String getInputReqBodyString() {
+        return inputReqBodyString;
     }
 
     public MediaType getResponseContentType() {

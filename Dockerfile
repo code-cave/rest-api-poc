@@ -6,6 +6,6 @@ RUN chmod -R ag+w /app
 EXPOSE 8080
 
 CMD echo "${JAVA_OPTS}"
-CMD java -jar ${JAVA_OPTS} /app/app.jar --spring.profiles.active=nonprod
+CMD java -jar ${JAVA_OPTS} /app/app.jar --spring.profiles.active=${ENVIRONMENT:nonprod}
 
 USER 1001

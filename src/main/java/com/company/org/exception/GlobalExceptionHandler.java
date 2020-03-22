@@ -1,11 +1,16 @@
 package com.company.org.exception;
 
+import com.company.org.Application;
 import com.company.org.controller.handler.ResponseHandler;
 import com.company.org.error.ErrorVO;
 import com.company.org.model.RequestVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -55,6 +60,15 @@ public class GlobalExceptionHandler {
         logRequestBody(dle.getStatusCode(), dle.getErrorMessage(), reqBody, req.getMethod());
 
         return responseHandler.createErrorResponse(dle.getErrorVO());
+    }
+
+    @ExceptionHandler({RuntimeException.class})
+    protected void handleRuntimeException(RuntimeException re) {
+
+        LOGGER.error("Fatal exception occurred: {}", re.getMessage());
+        LOGGER.error("Stacktrace: ", re);
+        LOGGER.error("Shutting down application");
+        System.exit(1);
     }
 
     @ExceptionHandler({Exception.class})

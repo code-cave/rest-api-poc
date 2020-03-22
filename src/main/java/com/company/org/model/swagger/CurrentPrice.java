@@ -1,4 +1,4 @@
-package com.company.org.model;
+package com.company.org.model.swagger;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

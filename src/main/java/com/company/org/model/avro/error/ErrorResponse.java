@@ -14,7 +14,7 @@ import org.apache.avro.message.SchemaStore;
 @org.apache.avro.specific.AvroGenerated
 public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
     private static final long serialVersionUID = 398917038176310779L;
-    public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ErrorResponse\",\"namespace\":\"com.company.org.model.avro.error\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"status\",\"type\":\"int\"},{\"name\":\"error\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"message\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+    public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ErrorResponse\",\"namespace\":\"com.company.org.model.avro.error\",\"fields\":[{\"name\":\"timeStamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"status\",\"type\":\"int\"},{\"name\":\"error\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"message\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
     public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
     private static SpecificData MODEL$ = new SpecificData();
@@ -51,7 +51,7 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
         return DECODER.decode(b);
     }
 
-    private java.lang.String timestamp;
+    private java.lang.String timeStamp;
     private int status;
     private java.lang.String error;
     private java.lang.String message;
@@ -65,13 +65,13 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
      * All-args constructor.
-     * @param timestamp The new value for timestamp
+     * @param timeStamp The new value for timeStamp
      * @param status The new value for status
      * @param error The new value for error
      * @param message The new value for message
      */
-    public ErrorResponse(java.lang.String timestamp, java.lang.Integer status, java.lang.String error, java.lang.String message) {
-        this.timestamp = timestamp;
+    public ErrorResponse(java.lang.String timeStamp, java.lang.Integer status, java.lang.String error, java.lang.String message) {
+        this.timeStamp = timeStamp;
         this.status = status;
         this.error = error;
         this.message = message;
@@ -81,7 +81,7 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
     // Used by DatumWriter.  Applications should not call.
     public java.lang.Object get(int field$) {
         switch (field$) {
-            case 0: return timestamp;
+            case 0: return timeStamp;
             case 1: return status;
             case 2: return error;
             case 3: return message;
@@ -93,7 +93,7 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
     @SuppressWarnings(value="unchecked")
     public void put(int field$, java.lang.Object value$) {
         switch (field$) {
-            case 0: timestamp = (java.lang.String)value$; break;
+            case 0: timeStamp = (java.lang.String)value$; break;
             case 1: status = (java.lang.Integer)value$; break;
             case 2: error = (java.lang.String)value$; break;
             case 3: message = (java.lang.String)value$; break;
@@ -102,19 +102,19 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
     }
 
     /**
-     * Gets the value of the 'timestamp' field.
-     * @return The value of the 'timestamp' field.
+     * Gets the value of the 'timeStamp' field.
+     * @return The value of the 'timeStamp' field.
      */
-    public java.lang.String getTimestamp() {
-        return timestamp;
+    public java.lang.String getTimeStamp() {
+        return timeStamp;
     }
 
     /**
-     * Sets the value of the 'timestamp' field.
+     * Sets the value of the 'timeStamp' field.
      * @param value the value to set.
      */
-    public void setTimestamp(java.lang.String value) {
-        this.timestamp = value;
+    public void setTimeStamp(java.lang.String value) {
+        this.timeStamp = value;
     }
 
     /**
@@ -197,7 +197,7 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
     public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ErrorResponse>
         implements org.apache.avro.data.RecordBuilder<ErrorResponse> {
 
-        private java.lang.String timestamp;
+        private java.lang.String timeStamp;
         private int status;
         private java.lang.String error;
         private java.lang.String message;
@@ -213,8 +213,8 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
          */
         private Builder(com.company.org.model.avro.error.ErrorResponse.Builder other) {
             super(other);
-            if (isValidValue(fields()[0], other.timestamp)) {
-                this.timestamp = data().deepCopy(fields()[0].schema(), other.timestamp);
+            if (isValidValue(fields()[0], other.timeStamp)) {
+                this.timeStamp = data().deepCopy(fields()[0].schema(), other.timeStamp);
                 fieldSetFlags()[0] = true;
             }
             if (isValidValue(fields()[1], other.status)) {
@@ -237,8 +237,8 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
          */
         private Builder(com.company.org.model.avro.error.ErrorResponse other) {
             super(SCHEMA$);
-            if (isValidValue(fields()[0], other.timestamp)) {
-                this.timestamp = data().deepCopy(fields()[0].schema(), other.timestamp);
+            if (isValidValue(fields()[0], other.timeStamp)) {
+                this.timeStamp = data().deepCopy(fields()[0].schema(), other.timeStamp);
                 fieldSetFlags()[0] = true;
             }
             if (isValidValue(fields()[1], other.status)) {
@@ -256,40 +256,40 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
         }
 
         /**
-         * Gets the value of the 'timestamp' field.
+         * Gets the value of the 'timeStamp' field.
          * @return The value.
          */
-        public java.lang.String getTimestamp() {
-            return timestamp;
+        public java.lang.String getTimeStamp() {
+            return timeStamp;
         }
 
         /**
-         * Sets the value of the 'timestamp' field.
-         * @param value The value of 'timestamp'.
+         * Sets the value of the 'timeStamp' field.
+         * @param value The value of 'timeStamp'.
          * @return This builder.
          */
-        public com.company.org.model.avro.error.ErrorResponse.Builder setTimestamp(java.lang.String value) {
+        public com.company.org.model.avro.error.ErrorResponse.Builder setTimeStamp(java.lang.String value) {
             validate(fields()[0], value);
-            this.timestamp = value;
+            this.timeStamp = value;
             fieldSetFlags()[0] = true;
             return this;
         }
 
         /**
-         * Checks whether the 'timestamp' field has been set.
-         * @return True if the 'timestamp' field has been set, false otherwise.
+         * Checks whether the 'timeStamp' field has been set.
+         * @return True if the 'timeStamp' field has been set, false otherwise.
          */
-        public boolean hasTimestamp() {
+        public boolean hasTimeStamp() {
             return fieldSetFlags()[0];
         }
 
 
         /**
-         * Clears the value of the 'timestamp' field.
+         * Clears the value of the 'timeStamp' field.
          * @return This builder.
          */
-        public com.company.org.model.avro.error.ErrorResponse.Builder clearTimestamp() {
-            timestamp = null;
+        public com.company.org.model.avro.error.ErrorResponse.Builder clearTimeStamp() {
+            timeStamp = null;
             fieldSetFlags()[0] = false;
             return this;
         }
@@ -415,7 +415,7 @@ public class ErrorResponse extends org.apache.avro.specific.SpecificRecordBase i
         public ErrorResponse build() {
             try {
                 ErrorResponse record = new ErrorResponse();
-                record.timestamp = fieldSetFlags()[0] ? this.timestamp : (java.lang.String) defaultValue(fields()[0]);
+                record.timeStamp = fieldSetFlags()[0] ? this.timeStamp : (java.lang.String) defaultValue(fields()[0]);
                 record.status = fieldSetFlags()[1] ? this.status : (java.lang.Integer) defaultValue(fields()[1]);
                 record.error = fieldSetFlags()[2] ? this.error : (java.lang.String) defaultValue(fields()[2]);
                 record.message = fieldSetFlags()[3] ? this.message : (java.lang.String) defaultValue(fields()[3]);

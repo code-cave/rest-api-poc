@@ -1,4 +1,4 @@
-package com.company.org.model;
+package com.company.org.model.swagger;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -6,26 +6,26 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProductDataModel", propOrder = {
-    "id",
+@XmlType(name = "Product", propOrder = {
+    "_id",
     "name",
     "current_price"
 })
-public class ProductDataModel {
+public class Product {
 
-    @XmlElement(required = true)
-    protected long id;
+    @XmlElement(name = "_id", required = true)
+    protected long _id;
     @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
     protected CurrentPrice current_price;
 
     public long getId() {
-        return id;
+        return _id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(long _id) {
+        this._id = _id;
     }
 
     public String getName() {

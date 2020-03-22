@@ -4,10 +4,10 @@ import com.company.org.controller.handler.ResponseHandler;
 import com.company.org.model.RequestVO;
 import com.company.org.model.ResponseVO;
 import com.company.org.model.swagger.ErrorResponse;
-import com.company.org.model.swagger.Product;
+import com.company.org.model.swagger.Products;
 import com.company.org.security.Authentication;
-import com.company.org.service.GetProductServiceV1;
-import com.company.org.validation.GetProductValidatorV1;
+import com.company.org.service.GetProductsServiceV1;
+import com.company.org.validation.GetProductsValidatorV1;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -29,39 +29,32 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
-public class GetProductControllerV1 {
+public class GetProductsControllerV1 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GetProductControllerV1.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetProductsControllerV1.class);
 
     @Autowired
     Authentication authentication;
 
     @Autowired
-    GetProductValidatorV1 getProductValidatorV1;
+    GetProductsValidatorV1 getProductsValidatorV1;
 
     @Autowired
-    GetProductServiceV1 getProductServiceV1;
+    GetProductsServiceV1 getProductsServiceV1;
 
     @Autowired
     ResponseHandler responseHandler;
 
     @ResponseBody
     @GetMapping(
-        path = "/retail/product/{id}",
+        path = "/retail/products",
         produces = { MediaType.APPLICATION_JSON_VALUE }
     )
     @Operation(
-        summary = "Get Product Record",
-        description = "Performs a GET operation to retrieve a product record based on id",
+        summary = "Get All Product Records",
+        description = "Performs a GET operation to retrieve a all product records",
         tags = "MyRetailAPI",
         parameters = {
-            @Parameter(
-                name = "id",
-                in = ParameterIn.PATH,
-                description = "Must be of type long",
-                example = "13860428",
-                required = true
-            ),
             @Parameter(
                 name = "token",
                 in = ParameterIn.HEADER,
@@ -82,14 +75,14 @@ public class GetProductControllerV1 {
         @ApiResponse(
             responseCode = "200", description = "Success",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-            schema = @Schema(implementation = Product.class),
-            examples = @ExampleObject(value = "{ \"_id\": 13860428, \"name\": \"The Big Lebowski (Blu-ray) (Widescreen)\", \"current_price\": { \"value\": 13.49, \"currency_code\": \"USD\" } }"))
+            schema = @Schema(implementation = Products.class),
+            examples = @ExampleObject(value = "{ \"products\": [ { \"_id\": 13860428, \"name\": \"The Big Lebowski (Blu-ray) (Widescreen)\", \"current_price\": { \"value\": 13.49, \"currency_code\": \"USD\" } }, { \"_id\": 11223344, \"name\": \"Samsung SmartTV (75inch)\", \"current_price\": { \"value\": 2399.99, \"currency_code\": \"USD\" } } ] }"))
         ),
         @ApiResponse(
             responseCode = "400", description = "Bad Request",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
             schema = @Schema(implementation = ErrorResponse.class),
-            examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 400, \"error\": \"Bad Request\", \"message\": \"Invalid format for id path parameter\" }"))
+            examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 400, \"error\": \"Bad Request\", \"message\": \"The request was not quite right\" }"))
         ),
         @ApiResponse(
             responseCode = "401", description = "Unauthorized",
@@ -110,17 +103,15 @@ public class GetProductControllerV1 {
             examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 500, \"error\": \"Internal Server Error\", \"message\": \"An internal server error has occurred\" }"))
         )
     })
-    public ResponseEntity<String> getProductById(@PathVariable(name = "id") String id,
-                                                 @RequestHeader(name = "token") String token,
+    public ResponseEntity<String> getProductsById(@RequestHeader(name = "token") String token,
                                                  @RequestHeader(name = "Accept") String accept) {
         /*
          * The id is of type String so that validation can handle in the validator class
          * and throw the specific bad request error with the error message as opposed to
          * having the Spring frontend throw the error with its own message
          */
-        // Deal with path variables
+        // Deal with no path variables
         Map<String, String> pathVars = new HashMap<>();
-        pathVars.put("id", id);
         // Deal with headers
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("token", token);
@@ -128,9 +119,9 @@ public class GetProductControllerV1 {
 
         authentication.authenticate(token);
 
-        RequestVO requestVO = getProductValidatorV1.validateGetRequest(pathVars, httpHeaders.toSingleValueMap());
+        RequestVO requestVO = getProductsValidatorV1.validateGetRequest(pathVars, httpHeaders.toSingleValueMap());
 
-        ResponseVO response = getProductServiceV1.doService(requestVO);
+        ResponseVO response = getProductsServiceV1.doService(requestVO);
 
         return responseHandler.createResponse(response);
     }

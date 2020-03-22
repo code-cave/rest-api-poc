@@ -13,6 +13,7 @@
     <springdoc.version>1.2.32</springdoc.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
@@ -29,6 +30,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-ui</artifactId>
       <version>${springdoc.version}</version>
@@ -38,6 +45,12 @@
       <groupId>org.apache.avro</groupId>
       <artifactId>avro</artifactId>
       <version>1.8.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-avro</artifactId>
+      <version>2.10.2</version>
     </dependency>
 
     <dependency>
@@ -63,7 +76,23 @@
   <build>
     <finalName>app</finalName>
     <plugins>
-      <!-- Needed for compiling groovy classes -->
+      <!-- repackage to force a fat jar build so the manifest get created -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring.version}</version>
+        <configuration>
+          <mainClass>com.company.org.Application</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Needed for compiling with java 11 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -84,7 +113,7 @@
           </includes>
         </configuration>
       </plugin>
-      <!-- This is being used to compile the test module -->
+      <!-- This is being used to compile the tests -->
       <plugin>
         <groupId>org.codehaus.gmavenplus</groupId>
         <artifactId>gmavenplus-plugin</artifactId>
