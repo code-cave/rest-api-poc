@@ -49,7 +49,7 @@ public class PutProductControllerV1 {
     )
     @Operation(
         summary = "Put Product Record",
-        description = "Performs a Put operation to update product record price based on id and request body",
+        description = "Performs a PUT operation to update product record price based on id and request body",
         tags = "MyRetailAPI",
         parameters = {
             @Parameter(
@@ -86,7 +86,7 @@ public class PutProductControllerV1 {
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = Product.class),
-                examples = @ExampleObject(value = "{ \"_id\": 11223344, \"name\": \"Samsung SmartTV (75inch)\", \"current_price\": { \"value\": 2399.99, \"currency_code\": \"USD\" } }")
+                examples = @ExampleObject(value = "{ \"_id\": 11223344, \"name\": \"Samsung SmartTV (75inch)\", \"current_price\": { \"value\": 1999.99, \"currency_code\": \"USD\" } }")
             )
         )
     )

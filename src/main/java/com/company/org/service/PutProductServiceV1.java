@@ -44,7 +44,8 @@ public class PutProductServiceV1 {
     private void checkResult(UpdateResult updateResult, RequestVO requestVO) {
         // If the update was successful, the modified count will be 1
         // The modified count can never be greater than 1 because _id is unique
-        if (updateResult.getModifiedCount() != 1) {
+        // If inserting with same price, then the getMatchedCount flag will pass through
+        if (!updateResult.isModifiedCountAvailable() || updateResult.getMatchedCount() != 1) {
             String message = "Unable to update, product with id " + requestVO.getPathVars().get("id") + " not found";
             throw new ServiceLayerException(HttpStatus.NOT_FOUND, message, requestVO);
         }

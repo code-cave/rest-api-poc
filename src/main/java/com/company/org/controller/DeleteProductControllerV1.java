@@ -47,7 +47,7 @@ public class DeleteProductControllerV1 {
         produces = { MediaType.APPLICATION_JSON_VALUE }
     )
     @Operation(
-        summary = "Get Product Record",
+        summary = "Delete Product Record",
         description = "Performs a DELETE operation to delete a product record based on id",
         tags = "MyRetailAPI",
         parameters = {

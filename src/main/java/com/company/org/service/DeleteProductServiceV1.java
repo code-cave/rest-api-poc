@@ -4,7 +4,6 @@ import com.company.org.exception.ServiceLayerException;
 import com.company.org.model.RequestVO;
 import com.company.org.model.ResponseVO;
 import com.company.org.model.avro.product.Product;
-import com.mongodb.client.result.DeleteResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
