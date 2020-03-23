@@ -109,6 +109,12 @@ public class PostProductControllerV1 {
             examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 404, \"error\": \"Not Found\", \"message\": \"Product record not found\" }"))
         ),
         @ApiResponse(
+            responseCode = "409", description = "Conflict",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = ErrorResponse.class),
+            examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 409, \"error\": \"Conflict\", \"message\": \"Unable to insert product with id 99887766\" }"))
+        ),
+        @ApiResponse(
             responseCode = "500", description = "Internal Server Error",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
             schema = @Schema(implementation = ErrorResponse.class),

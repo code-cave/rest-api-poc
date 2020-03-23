@@ -27,9 +27,9 @@ import java.util.Collections;
 @Component
 public class GetProductAlteredNameServiceV1 {
 
-    private static final RestTemplate TEMPLATE = new RestTemplate();
     private static final UriComponents URI = buildURI();
     private static final Gson GSON = new Gson();
+    private static RestTemplate template = new RestTemplate();
 
     @Autowired
     private MongoOperations mongoOperations;
@@ -61,7 +61,7 @@ public class GetProductAlteredNameServiceV1 {
         ResponseEntity<String> response;
         // Gotta catch those nasty errors
         try {
-            response = TEMPLATE.exchange(new RequestEntity<String>(HttpMethod.GET, uri), String.class);
+            response = template.exchange(new RequestEntity<String>(HttpMethod.GET, uri), String.class);
         }
         catch (RestClientException e) {
             String message = "Product altered name record with id " +
@@ -83,7 +83,7 @@ public class GetProductAlteredNameServiceV1 {
 
     private String checkAlteredName(RequestVO requestVO, Product product, ResponseEntity<String> response) {
 
-        if (response.getStatusCode() != HttpStatus.OK) {
+        if (response == null || response.getStatusCode() != HttpStatus.OK) {
             String message = "Product altered name record with id " +
                 product.getId$1() + " not found at external service";
             throw new ServiceLayerException(HttpStatus.NOT_FOUND, message, requestVO);

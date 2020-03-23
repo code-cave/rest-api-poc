@@ -7,12 +7,12 @@ public class BaseRuntimeException extends RuntimeException {
     private final ErrorVO errorVO;
 
     public BaseRuntimeException(ErrorVO errorVO) {
-        super(errorVO.buildErrorMessage());
+        super(errorVO.getErrorMessage());
         this.errorVO = errorVO;
     }
 
     public BaseRuntimeException(ErrorVO errorVO, Throwable cause) {
-        super(errorVO.buildErrorMessage(), cause);
+        super(errorVO.getErrorMessage(), cause);
         this.errorVO = errorVO;
     }
 

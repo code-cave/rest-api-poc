@@ -23,7 +23,7 @@ public class RequestVO implements Serializable {
     SpecificRecord avroObject;
     MediaType responseContentType = MediaType.APPLICATION_JSON;
 
-    public RequestVO(Map<String,String> pathVars, Map<String,String> inputHeaders) {
+    public RequestVO(Map<String,String> pathVars, Map<String, String> inputHeaders) {
 
         setLoggingAttribute(pathVars.toString());
         cleanHeaders(inputHeaders);
@@ -32,7 +32,7 @@ public class RequestVO implements Serializable {
         this.inputPathVars = pathVars;
     }
 
-    public RequestVO(String requestBody, Map<String,String> pathVars, Map<String,String> inputHeaders) {
+    public RequestVO(String requestBody, Map<String, String> pathVars, Map<String, String> inputHeaders) {
 
         setLoggingAttribute(requestBody);
         this.inputReqBodyString = requestBody;

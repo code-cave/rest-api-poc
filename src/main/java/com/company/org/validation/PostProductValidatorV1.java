@@ -18,9 +18,8 @@ public class PostProductValidatorV1 implements RequestValidatorBase {
 
     private static final String INVALID_REQUEST_BODY = "Invalid request body object not schema compliant";
 
-    private static final DatumReader<Product> READER = new SpecificDatumReader<>(Product.class);
-    private static final DecoderFactory DECODER_FACTORY = DecoderFactory.get();
     private static final Schema PRODUCT_SCHEMA = Product.getClassSchema();
+    private static final DatumReader<Product> READER = new SpecificDatumReader<>(PRODUCT_SCHEMA);
 
     @Override
     public void validateRequest(RequestVO requestVO) {
@@ -37,7 +36,7 @@ public class PostProductValidatorV1 implements RequestValidatorBase {
 
     private Product validateRequestBody(RequestVO requestVO) throws IOException {
 
-        Decoder decoder = DECODER_FACTORY.jsonDecoder(PRODUCT_SCHEMA, requestVO.getInputReqBodyString());
+        Decoder decoder = DecoderFactory.get().jsonDecoder(PRODUCT_SCHEMA, requestVO.getInputReqBodyString());
         Product product = READER.read(null, decoder);
         requestVO.setAvroObject(product);
         return product;

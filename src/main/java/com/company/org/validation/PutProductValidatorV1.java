@@ -45,7 +45,7 @@ public class PutProductValidatorV1 implements RequestValidatorBase {
         validateId(requestVO, id);
     }
 
-    private Product validateRequestBody(RequestVO requestVO) throws IOException {
+    private Product validateRequestBody(RequestVO requestVO) throws AvroTypeException, IOException {
 
         Decoder decoder = DECODER_FACTORY.jsonDecoder(PRODUCT_SCHEMA, requestVO.getInputReqBodyString());
         Product product = READER.read(null, decoder);

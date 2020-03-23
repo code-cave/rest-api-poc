@@ -36,7 +36,7 @@ public class PostProductServiceV1 {
         // If the insert is successful, the product will not be null
         if (product == null) {
             String message = "Unable to insert product with id " + ((Product)requestVO.getAvroObject()).getId$1();
-            throw new ServiceLayerException(HttpStatus.NOT_FOUND, message, requestVO);
+            throw new ServiceLayerException(HttpStatus.CONFLICT, message, requestVO);
         }
         return product;
     }
