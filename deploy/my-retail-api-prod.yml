@@ -1,19 +1,19 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: fmi-api
+  name: my-retail-api
 objects:
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
     labels:
-      app: fmi-api
-    name: fmi-api
+      app: my-retail-api
+    name: my-retail-api
   spec:
     replicas: 10
     selector:
-      app: fmi-api
-      deploymentconfig: fmi-api
+      app: my-retail-api
+      deploymentconfig: my-retail-api
     strategy:
       activeDeadlineSeconds: 21600
       resources: {}
@@ -27,25 +27,25 @@ objects:
     template:
       metadata:
         labels:
-          app: fmi-api
-          deploymentconfig: fmi-api
+          app: my-retail-api
+          deploymentconfig: my-retail-api
       spec:
         containers:
-        - image: docker-url:prod
+        - image: docker.domain.com/namespace/my-retail-api:prod
           imagePullPolicy: Always
-          name: fmi-api
+          name: my-retail-api
           ports:
-          - containerPort: 8443
+          - containerPort: 8444
             protocol: TCP
           - containerPort: 8080
             protocol: TCP
           resources:
             limits:
-              cpu: 1500m
-              memory: 4G
+              cpu: 2
+              memory: 3G
             requests:
               cpu: 1
-              memory: 3G
+              memory: 2G
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           livenessProbe:
@@ -60,7 +60,7 @@ objects:
             timeoutSeconds: 1
           env:
             - name: JAVA_OPTS
-              value: "-Xms3500M -Xmx3500M"
+              value: "-Xms2500M -Xmx2500M"
             - name: ENVIRONMENT_NAME
               value: prod
             - name: AES_KEY
@@ -68,11 +68,6 @@ objects:
                 secretKeyRef:
                   key: password
                   name: prod-aes-key-secure-1
-            - name: TG_AES_KEY
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: prod-aes-key-tg-1
             - name: KEYSTORE_PASS
               valueFrom:
                 secretKeyRef:
@@ -99,17 +94,17 @@ objects:
   metadata:
     annotations:
     labels:
-      app: fmi-api
+      app: my-retail-api
     name: application-service
   spec:
     ports:
-    - name: 8443-tcp
-      port: 8443
+    - name: 8444-tcp
+      port: 8444
       protocol: TCP
-      targetPort: 8443
+      targetPort: 8444
     selector:
-      app: fmi-api
-      deploymentconfig: fmi-api
+      app: my-retail-api
+      deploymentconfig: my-retail-api
     sessionAffinity: None
     type: ClusterIP
 
@@ -122,7 +117,7 @@ objects:
       prometheus.io/scheme: http
       prometheus.io/scrape: 'true'
     labels:
-      app: fmi-api
+      app: my-retail-api
     name: management-service
   spec:
     ports:
@@ -131,8 +126,8 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: fmi-api
-      deploymentconfig: fmi-api
+      app: my-retail-api
+      deploymentconfig: my-retail-api
     sessionAffinity: None
     type: ClusterIP
 
@@ -143,14 +138,14 @@ objects:
       haproxy.router.openshift.io/balance: roundrobin
       openshift.io/host.generated: 'true'
     labels:
-      app: fmi-api
-    name: fmi-api
-    namespace: prod-c360-fmi-api
-    selfLink: /oapi/v1/namespaces/prod-c360-fmi-api/routes/fmi-api
+      app: my-retail-api
+    name: my-retail-api
+    namespace: prod-my-retail-api
+    selfLink: /oapi/v1/namespaces/prod-my-retail-api/routes/my-retail-api
   spec:
-    host: namespace.host
+    host: my-retail-api-prod-all.origin.domain.com
     port:
-      targetPort: 8443-tcp
+      targetPort: 8444-tcp
     to:
       kind: Service
       name: application-service
@@ -166,14 +161,14 @@ objects:
       haproxy.router.openshift.io/balance: roundrobin
       openshift.io/host.generated: 'true'
     labels:
-      app: fmi-api
-    name: proj.domain
-    namespace: prod-c360-fmi-api
-    selfLink: /oapi/v1/namespaces/prod-c360-project/domain
+      app: my-retail-api
+    name: my-retail-api.domain.com
+    namespace: prod-my-retail-api
+    selfLink: /oapi/v1/namespaces/prod-my-retail-api/routes/my-retail-api.domain.com
   spec:
-    host: project.domain
+    host: my-retail-api.domain.com
     port:
-      targetPort: 8443-tcp
+      targetPort: 8444-tcp
     to:
       kind: Service
       name: application-service
