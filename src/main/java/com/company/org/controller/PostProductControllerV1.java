@@ -22,9 +22,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/v1")
 public class PostProductControllerV1 {
@@ -109,10 +106,22 @@ public class PostProductControllerV1 {
             examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 404, \"error\": \"Not Found\", \"message\": \"Product record not found\" }"))
         ),
         @ApiResponse(
+            responseCode = "406", description = "Not Acceptable",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = ErrorResponse.class),
+            examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 406, \"error\": \"Not Acceptable\", \"message\": \"Accept application/xml not supported\" }"))
+        ),
+        @ApiResponse(
             responseCode = "409", description = "Conflict",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
             schema = @Schema(implementation = ErrorResponse.class),
             examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 409, \"error\": \"Conflict\", \"message\": \"Unable to insert product with id 99887766\" }"))
+        ),
+        @ApiResponse(
+            responseCode = "415", description = "Unsupported Media Type",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = ErrorResponse.class),
+            examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 415, \"error\": \"Unsupported Media Type\", \"message\": \"Content-Type application/xml not supported\" }"))
         ),
         @ApiResponse(
             responseCode = "500", description = "Internal Server Error",

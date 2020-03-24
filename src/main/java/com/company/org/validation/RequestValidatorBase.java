@@ -53,11 +53,6 @@ public interface RequestValidatorBase {
         return requestVO;
     }
 
-    default HttpStatus getDefaultErrorStatusCode() {
-
-        return HttpStatus.BAD_REQUEST;
-    }
-
     default void validateContentType(RequestVO requestVO) {
 
        if (!requestVO.hasJsonContentType()) {

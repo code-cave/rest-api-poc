@@ -100,6 +100,12 @@ public class DeleteProductControllerV1 {
             examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 404, \"error\": \"Not Found\", \"message\": \"Product record not found\" }"))
         ),
         @ApiResponse(
+            responseCode = "406", description = "Not Acceptable",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = ErrorResponse.class),
+            examples = @ExampleObject(value = "{ \"timeStamp\": \"Sat Mar 21 17:00:00 GMT 2020\", \"status\": 406, \"error\": \"Not Acceptable\", \"message\": \"Accept application/xml not supported\" }"))
+        ),
+        @ApiResponse(
             responseCode = "500", description = "Internal Server Error",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
             schema = @Schema(implementation = ErrorResponse.class),

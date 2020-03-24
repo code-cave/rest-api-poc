@@ -19,8 +19,8 @@ public class RequestVO implements Serializable {
     String inputReqBodyString = "";
     Map<String,String> inputHeaders;
     Map<String,String> inputPathVars;
-    String inputAcceptType;
     SpecificRecord avroObject;
+    // Can hard set this because all the APIs return json
     MediaType responseContentType = MediaType.APPLICATION_JSON;
 
     public RequestVO(Map<String,String> pathVars, Map<String, String> inputHeaders) {
@@ -28,7 +28,6 @@ public class RequestVO implements Serializable {
         setLoggingAttribute(pathVars.toString());
         cleanHeaders(inputHeaders);
         this.inputHeaders = inputHeaders;
-        this.inputAcceptType = inputHeaders.get(HttpHeaders.ACCEPT);
         this.inputPathVars = pathVars;
     }
 
@@ -38,7 +37,6 @@ public class RequestVO implements Serializable {
         this.inputReqBodyString = requestBody;
         cleanHeaders(inputHeaders);
         this.inputHeaders = inputHeaders;
-        this.inputAcceptType = inputHeaders.get(HttpHeaders.ACCEPT);
         this.inputPathVars = pathVars;
     }
 
@@ -53,8 +51,10 @@ public class RequestVO implements Serializable {
 
     private void cleanHeaders(Map<String, String> inputHeaders) {
 
-        inputHeaders.put(HttpHeaders.CONTENT_TYPE, parseHeader(inputHeaders.get(HttpHeaders.CONTENT_TYPE)));
-        inputHeaders.put(HttpHeaders.ACCEPT, parseHeader(inputHeaders.get(HttpHeaders.ACCEPT)));
+        if (inputHeaders != null) {
+            inputHeaders.put(HttpHeaders.CONTENT_TYPE, parseHeader(inputHeaders.get(HttpHeaders.CONTENT_TYPE)));
+            inputHeaders.put(HttpHeaders.ACCEPT, parseHeader(inputHeaders.get(HttpHeaders.ACCEPT)));
+        }
     }
 
     public boolean hasJsonContentType() {
@@ -98,9 +98,5 @@ public class RequestVO implements Serializable {
 
     public Map<String, String> getPathVars() {
         return inputPathVars;
-    }
-
-    public String getAcceptType() {
-        return inputAcceptType;
     }
 }
