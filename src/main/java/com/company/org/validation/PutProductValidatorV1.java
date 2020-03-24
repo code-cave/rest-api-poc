@@ -46,7 +46,7 @@ public class PutProductValidatorV1 implements RequestValidatorBase {
     }
 
     private Product validateRequestBody(RequestVO requestVO) throws AvroTypeException, IOException {
-
+        // Turn the json string into an Avro Product object if possible
         Decoder decoder = DECODER_FACTORY.jsonDecoder(PRODUCT_SCHEMA, requestVO.getInputReqBodyString());
         Product product = READER.read(null, decoder);
         requestVO.setAvroObject(product);
@@ -54,7 +54,7 @@ public class PutProductValidatorV1 implements RequestValidatorBase {
     }
 
     private void validateId(RequestVO requestVO, long id) {
-
+        // Gotta make sure that the ids are the same
         Product product = (Product)requestVO.getAvroObject();
         if (id != product.getId$1()) {
             ValidationUtility.failFast(HttpStatus.BAD_REQUEST, INVALID_REQUEST_BODY_ID, requestVO);

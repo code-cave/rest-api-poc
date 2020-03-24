@@ -22,12 +22,12 @@ public class PostProductServiceV1 {
     public ResponseVO doService(RequestVO requestVO) {
 
         Product product = saveMongo(requestVO);
-
         return new ResponseVO(product.toString());
     }
 
     private Product saveMongo(RequestVO requestVO) {
-
+        // Attempt to insert the record to the database and check the result
+        // Can safely cast here since the validator class already validated it
         Product product = (Product)requestVO.getAvroObject();
         return checkResult(mongoOperations.save(product, "products"), requestVO);
     }

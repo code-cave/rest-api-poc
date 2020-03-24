@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.regex.Pattern;
 
+// Just a utility for dealing with validation errors
 public final class ValidationUtility {
 
     private static final Pattern CURRENCY = Pattern.compile("(([1-9]\\d*)?\\d)(\\.\\d{0,2})$");

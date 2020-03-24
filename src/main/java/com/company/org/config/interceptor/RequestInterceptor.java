@@ -20,6 +20,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         // Adding in super simple auth
         // Can always be replaced with something legit
         if (req.getAttribute("start_time") == null) {
+            // Make sure there is always a timestamp that can be logged
             Long startTime = new Timestamp(System.currentTimeMillis()).getTime();
             req.setAttribute("start_time", startTime);
         }
@@ -30,14 +31,14 @@ public class RequestInterceptor implements HandlerInterceptor {
     // Do some things after dishing out the response
     @Override
     public void afterCompletion(HttpServletRequest req, HttpServletResponse res, Object o, Exception ex) {
-
+        // Construct the info for logging requests whose values
+        // can be offloaded onto logging apps like Kibana
         Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
         long endTime = timeStamp.getTime();
         Long startTime = (Long) req.getAttribute("start_time");
         long elapsedTime = endTime - startTime;
-
-
-        String logMessage = new StringBuilder(100) //baseline is 81 chars + dynamic
+        // Set a capacity since the know length is relatively known
+        String logMessage = new StringBuilder(100)
             .append("[===== ENDING ").append(req.getRequestURI())
             .append(", AUTHTOKEN=").append(req.getHeader("token"))
             .append(", TS=").append(endTime)

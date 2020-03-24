@@ -11,6 +11,7 @@ public class ErrorVO implements Serializable{
     private HttpStatus httpStatus;
     private String errorMessage;
 
+    // A POJO that is a VO for holding API error info
     public ErrorVO(HttpStatus httpStatus, String errorMessage) {
           this.httpStatus = httpStatus;
           this.errorMessage = errorMessage;

@@ -23,14 +23,15 @@ public class LoggingAspect {
 
     @Before("execution(* com.company.org.controller.*.*(..))")
     public void logBefore() {
-
+        // Log this info before executing the controller class
+        // Logged info can be offloaded to logging app like Kibana
         ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         HttpServletRequest req = attributes.getRequest();
         String token = req.getHeader("token");
 
         Long startTime = new Timestamp(System.currentTimeMillis()).getTime();
         req.setAttribute("start_time", startTime);
-
+        // Handy info for the incoming request
         String logMessage = new StringBuilder()
             .append("[===== STARTING ").append(req.getRequestURI())
             .append(", TOKEN=").append(token)
@@ -47,7 +48,7 @@ public class LoggingAspect {
     }
 
     protected String getParamString(Map<String, String[]> parameterMap) {
-
+        // Just turn this stuff into a string
         List<String> paramList = new ArrayList<>();
         if (!parameterMap.isEmpty()) {
             Set<String> keySet = parameterMap.keySet();

@@ -34,8 +34,8 @@ public class PostProductValidatorV1 implements RequestValidatorBase {
         }
     }
 
-    private Product validateRequestBody(RequestVO requestVO) throws IOException {
-
+    private Product validateRequestBody(RequestVO requestVO) throws AvroTypeException, IOException {
+        // Turn the json string into an Avro Product object if possible
         Decoder decoder = DecoderFactory.get().jsonDecoder(PRODUCT_SCHEMA, requestVO.getInputReqBodyString());
         Product product = READER.read(null, decoder);
         requestVO.setAvroObject(product);

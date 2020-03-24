@@ -29,6 +29,7 @@ public class GetProductAlteredNameServiceV1 {
 
     private static final UriComponents URI = buildURI();
     private static final Gson GSON = new Gson();
+    // Could make this a bean, but is simple enough for now to be this way
     private static RestTemplate template = new RestTemplate();
 
     @Autowired
@@ -55,7 +56,6 @@ public class GetProductAlteredNameServiceV1 {
     }
 
     private Product searchAlteredName(Product product, RequestVO requestVO) {
-        // Keeping requestVO here in case it is needed later
         // Search for the different product name value
         URI uri = URI.expand(Collections.singletonMap("id", String.valueOf(product.getId$1()))).encode().toUri();
         ResponseEntity<String> response;
@@ -82,7 +82,7 @@ public class GetProductAlteredNameServiceV1 {
     }
 
     private String checkAlteredName(RequestVO requestVO, Product product, ResponseEntity<String> response) {
-
+        // Check that anything was found
         if (response == null || response.getStatusCode() != HttpStatus.OK) {
             String message = "Product altered name record with id " +
                 product.getId$1() + " not found at external service";
@@ -93,7 +93,7 @@ public class GetProductAlteredNameServiceV1 {
     }
 
     private String extractAlteredName(RequestVO requestVO, String responseBody) {
-
+        // Extract the name value from the external service response
         try {
             JsonObject json = GSON.fromJson(responseBody, JsonObject.class);
             return json.getAsJsonObject("product")
@@ -112,7 +112,8 @@ public class GetProductAlteredNameServiceV1 {
         }
     }
     private static UriComponents buildURI() {
-
+        // This will always be the same as of now
+        // Later on this could be expanded and put into its own class
         String queryParam = "excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics";
 
         return UriComponentsBuilder.newInstance()

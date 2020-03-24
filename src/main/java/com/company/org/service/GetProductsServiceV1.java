@@ -32,7 +32,7 @@ public class GetProductsServiceV1 {
 
     private List<Product> searchMongo(RequestVO requestVO) {
         // Search the database for all of the product records
-        // keeping requestVO here in case needed later
+        // Keeping requestVO here in case needed later
         return mongoOperations.findAll(Product.class, "products");
     }
 
